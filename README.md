@@ -1,1 +1,1 @@
-# tp-gutenberg-block
+# tp-gutenberg-blocks
