@@ -137,6 +137,11 @@ class ProductGridEdit extends Component {
             `columns-${columns}`,
         ].filter(Boolean).join(' ');
 
+        const productsListFiltered = productsList.filter(product => {
+            return product.catalog_visibility !== 'hidden';
+
+        })
+
         return (
             <Fragment>
                 <InspectorControls>
@@ -168,24 +173,24 @@ class ProductGridEdit extends Component {
                         </div>
                         }
                         <SelectControl
-                            label={ __( 'Order', 'tpgb' ) }
-                            value={ `${orderBy}-${order}` }
-                            options={ [
-                                { label: __( 'Newest to oldest', 'tpgb' ), value: 'date-desc' },
-                                { label: __( 'Price: high to low', 'tpgb' ), value: 'price-desc' },
-                                { label: __( 'Price: low to high', 'tpgb' ), value: 'price-asc' },
-                                { label: __( 'Highest Rating first', 'tpgb' ), value: 'rating-desc' },
-                                { label: __( 'Most sale first', 'tpgb' ), value: 'popularity-desc' },
-                                { label: __( 'Title: Alphabetical', 'tpgb' ), value: 'title-asc' },
-                                { label: __( 'Title: Alphabetical reversed', 'tpgb' ), value: 'title-desc' },
-                            ] }
-                            onChange={ (value) => {
+                            label={__('Order', 'tpgb')}
+                            value={`${orderBy}-${order}`}
+                            options={[
+                                {label: __('Newest to oldest', 'tpgb'), value: 'date-desc'},
+                                {label: __('Price: high to low', 'tpgb'), value: 'price-desc'},
+                                {label: __('Price: low to high', 'tpgb'), value: 'price-asc'},
+                                {label: __('Highest Rating first', 'tpgb'), value: 'rating-desc'},
+                                {label: __('Most sale first', 'tpgb'), value: 'popularity-desc'},
+                                {label: __('Title: Alphabetical', 'tpgb'), value: 'title-asc'},
+                                {label: __('Title: Alphabetical reversed', 'tpgb'), value: 'title-desc'},
+                            ]}
+                            onChange={(value) => {
                                 const splitedVal = value.split('-');
-                                return setAttributes( {
+                                return setAttributes({
                                     orderBy: splitedVal[0],
                                     order: splitedVal[1],
-                                } )
-                            } }
+                                })
+                            }}
                         />
                         <RangeControl
                             label={__("Columns", "tpgb")}
@@ -206,7 +211,7 @@ class ProductGridEdit extends Component {
                 <div className={blockClassName}>
                     {!error && productsList.length > 0 &&
                     <div className={blockWrapperClassName}>
-                        {productsList.map((product, idx) => (
+                        {productsListFiltered.map((product, idx) => (
                             <div className="tpgb-col" key={idx}>
                                 <div className="tpgb-product">
                                     <div className="tpgb-product-img">
