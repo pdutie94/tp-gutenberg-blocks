@@ -32,7 +32,7 @@ function tpgb_blocks_register() {
 	wp_register_script(
 		'tpgb-blocks-editor-script',
 		plugins_url( 'dist/editor.js', __FILE__ ),
-		array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-data', 'wp-html-entities', 'wp-editor' )
+		array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-data', 'wp-html-entities', 'wp-editor', 'wp-url' )
 	);
 	wp_register_script(
 		'tpgb-blocks-script',
@@ -54,7 +54,7 @@ function tpgb_blocks_register() {
 		'attributes'      => array(
 			'numberOfPosts'  => array(
 				'type'    => 'number',
-				'default' => 5
+				'default' => 10
 			),
 			'postCategory' => array(
 				'type' => 'number'

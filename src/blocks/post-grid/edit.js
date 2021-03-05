@@ -56,7 +56,6 @@ class PostGridEdit extends Component {
     render() {
         const {posts, categories, className, attributes} = this.props
         const {numberOfPosts, postCategory, order, orderBy, columns} = attributes
-        console.log(posts)
         return (
             <Fragment>
                 <InspectorControls>

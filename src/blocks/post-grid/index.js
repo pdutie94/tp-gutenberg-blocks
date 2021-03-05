@@ -10,7 +10,7 @@ registerBlockType('tpgb/post-grid', {
     category: 'tpgb-blocks',
     keywords: [__('post', 'tpgb'), __('grid', 'tpgb')],
     edit: edit,
-    save: function ({className}) {
-        return <p className={className}>Post Grid Front end</p>;
+    save: function () {
+        return null;
     }
 })
