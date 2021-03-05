@@ -1,0 +1,39 @@
+.tpgb-woo-categories-list {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.tpgb-product {
+  text-align: center;
+
+  img {
+    margin: 0 auto 1.618em;
+  }
+
+  .tpgb-product-title {
+    margin-bottom: .5407911001em;
+  }
+
+  .tpgb-product-price {
+    font-size: .875em;
+    margin-bottom: 1rem;
+  }
+
+  .tpgb-product-add-to-cart {
+    span {
+      margin-bottom: .236em;
+      background-color: #eeeeee;
+      border-color: #eeeeee;
+      color: #333333;
+      display: inline-block;
+      padding: .6180469716em 1.41575em;
+      font-weight: 600;
+      font-size: .875em;
+
+      &:hover {
+        background-color: #d5d5d5;
+        border-color: #d5d5d5;
+      }
+    }
+  }
+}
