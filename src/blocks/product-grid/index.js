@@ -27,6 +27,10 @@ const blockAttr = {
     columns: {
         type: 'number',
         default: 3,
+    },
+    viewType: {
+        type: 'string',
+        default: 'grid'
     }
 }
 

@@ -5,11 +5,12 @@ const TerserPlugin = require('terser-webpack-plugin');
 const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 const path = require('path');
 
-module.exports =  (env, argv) => {
+module.exports = (env, argv) => {
     function isDevelopment() {
         return argv.mode === 'development';
     }
-    var config = {
+
+    const config = {
         entry: {
             editor: './src/editor.js',
             script: './src/script.js'
@@ -79,6 +80,29 @@ module.exports =  (env, argv) => {
                         },
                         'sass-loader'
                     ]
+                },
+                {
+                    test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
+                    use: [
+                        {
+                            loader: 'file-loader',
+                            options: {
+                                name: '[name].[ext]',
+                            }
+                        }
+                    ]
+                },
+                {
+                    test: /\.(png|jpg|gif|svg)$/i,
+                    use: [
+                        {
+                            loader: 'url-loader',
+                            options: {
+                                limit: 8192,
+                                name: '[name].[hash:7].[ext]'
+                            },
+                        },
+                    ],
                 }
             ]
         },

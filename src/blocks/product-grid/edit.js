@@ -1,8 +1,13 @@
 import {Component, Fragment} from "@wordpress/element"
 import {__} from "@wordpress/i18n"
-import {RangeControl, PanelBody, SelectControl, CheckboxControl} from "@wordpress/components"
-import {InspectorControls} from "@wordpress/editor"
-import {addQueryArgs} from "@wordpress/url";
+import {RangeControl, PanelBody, SelectControl, CheckboxControl, ToolbarGroup} from "@wordpress/components"
+import {InspectorControls, BlockControls} from "@wordpress/editor"
+import {addQueryArgs} from "@wordpress/url"
+
+// Import css files
+import "slick-carousel/slick/slick.min"
+import "slick-carousel/slick/slick.scss"
+import "slick-carousel/slick/slick-theme.scss"
 
 let fetchingQueue = null;
 
@@ -23,6 +28,15 @@ class ProductGridEdit extends Component {
 
     componentWillMount() {
         this.fetchProducts()
+    }
+
+    componentWillUpdate(nextProps) {
+        const {clientId} = this.props;
+        const $ = jQuery;
+
+        if (this.checkAttrChanged(nextProps.attributes, this.props.attributes)) {
+            $(`#block-${clientId} .tpgb-row.slick-initialized`).slick('unslick');
+        }
     }
 
     componentDidUpdate(prevProps) {
@@ -59,6 +73,7 @@ class ProductGridEdit extends Component {
     fetchProducts() {
         const self = this;
         const {
+            viewType,
             category,
             categories,
             order,
@@ -93,19 +108,28 @@ class ProductGridEdit extends Component {
                 self.setState({
                     error: true,
                 })
+            }).then(() => {
+                if (viewType === 'slider') {
+                    jQuery(`#block-${self.props.clientId} .tpgb-products-grid-block.slider-view .tpgb-row:not(.slick-initialized)`).slick({
+                        dots: true,
+                        adaptiveHeight: true,
+                        slidesToShow: 4
+                    });
+                }
             })
         }, 500)
     }
 
     checkAttrChanged(prevAttrs, curAttrs) {
         const {
+            viewType: prevView,
             category: prevCat,
             categories: prevCats,
             order: prevOrder,
             orderBy: prevOrderBy,
             numberOfProducts: prevLength
         } = prevAttrs;
-        const {category, categories, order, orderBy, numberOfProducts} = curAttrs;
+        const {viewType, category, categories, order, orderBy, numberOfProducts} = curAttrs;
 
         return (
             category !== prevCat
@@ -113,6 +137,7 @@ class ProductGridEdit extends Component {
             || order !== prevOrder
             || orderBy !== prevOrderBy
             || numberOfProducts !== prevLength
+            || prevView !== viewType
         )
     }
 
@@ -126,10 +151,27 @@ class ProductGridEdit extends Component {
             orderBy,
             numberOfProducts,
             columns,
+            viewType
         } = attributes;
+
+        const viewControls = [
+            {
+                icon: 'grid-view',
+                title: __('Normal View', 'tpgb'),
+                onClick: () => setAttributes({viewType: 'grid'}),
+                isActive: viewType === 'grid',
+            },
+            {
+                icon: 'slides',
+                title: __('Slider View', 'tpgb'),
+                onClick: () => setAttributes({viewType: 'slider'}),
+                isActive: viewType === 'slider',
+            },
+        ];
 
         const blockClassName = [
             "tpgb-products-grid-block",
+            viewType === 'slider' && 'slider-view',
         ].filter(Boolean).join(' ');
 
         const blockWrapperClassName = [
@@ -144,6 +186,9 @@ class ProductGridEdit extends Component {
 
         return (
             <Fragment>
+                <BlockControls>
+                    <ToolbarGroup controls={viewControls}/>
+                </BlockControls>
                 <InspectorControls>
                     <PanelBody title={__("General Settings", "tpgb")}>
                         <SelectControl

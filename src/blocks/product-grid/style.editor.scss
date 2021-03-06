@@ -3,6 +3,21 @@
   overflow-y: auto;
 }
 
+.tpgb-products-grid-block {
+  .slick-dots {
+    position: static;
+  }
+  &.slider-view {
+    .tpgb-row {
+      margin: 0 -15px;
+
+      .slick-list .tpgb-col {
+        padding: 0 15px;
+      }
+    }
+  }
+}
+
 .tpgb-product {
   text-align: center;
 
