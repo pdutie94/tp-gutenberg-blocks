@@ -237,13 +237,14 @@ class ProductGridEdit extends Component {
                                 })
                             }}
                         />
-                        <RangeControl
+                        {viewType !== 'slider' && <RangeControl
                             label={__("Columns", "tpgb")}
                             value={columns}
                             onChange={v => setAttributes({columns: v})}
                             min={1}
                             max={4}
                         />
+                        }
                         <RangeControl
                             label={__("Number of Products", "tpgb")}
                             value={numberOfProducts}

@@ -1,0 +1,28 @@
+.slick-slider {
+  .slick-prev:before, .slick-next:before {
+    color: black;
+  }
+}
+
+.tpgb-woo-products {
+  .slick-dots {
+    position: static;
+  }
+
+  &.slider-view {
+    ul.products {
+      margin: 0 -15px;
+
+      .slick-list {
+        transform: none;
+        .slick-track {
+          display: flex;
+        }
+        .slick-slide {
+          padding: 0 15px;
+          margin: 0 !important;
+        }
+      }
+    }
+  }
+}

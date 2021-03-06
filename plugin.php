@@ -12,6 +12,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+add_action( 'wp_enqueue_scripts', 'tpgb_enqueue_scripts' );
+function tpgb_enqueue_scripts() {
+	wp_enqueue_script( 'tpgb-blocks-script', plugins_url( 'dist/script.js', __FILE__ ), array( 'jquery' ) );
+}
+
 function tpgb_blocks_register_block_type( $block, $options = array() ) {
 	register_block_type(
 		'tpgb/' . $block,
@@ -19,7 +24,7 @@ function tpgb_blocks_register_block_type( $block, $options = array() ) {
 			array(
 				'editor_script' => 'tpgb-blocks-editor-script',
 				'editor_style'  => 'tpgb-blocks-editor-style',
-				'script'        => 'tpgb-blocks-script',
+//				'script'        => 'tpgb-blocks-script',
 				'style'         => 'tpgb-blocks-style'
 			),
 			$options
@@ -34,11 +39,11 @@ function tpgb_blocks_register() {
 		plugins_url( 'dist/editor.js', __FILE__ ),
 		array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-data', 'wp-html-entities', 'wp-editor', 'wp-url' )
 	);
-	wp_register_script(
+	/*wp_register_script(
 		'tpgb-blocks-script',
 		plugins_url( 'dist/script.js', __FILE__ ),
-		array( '' )
-	);
+		array( 'jQuery' )
+	);*/
 	wp_register_style(
 		'tpgb-blocks-editor-style',
 		plugins_url( 'dist/editor.css', __FILE__ ),
@@ -52,22 +57,22 @@ function tpgb_blocks_register() {
 	tpgb_blocks_register_block_type( 'post-grid', array(
 		'render_callback' => 'tpgb_blocks_render_post_grid_block',
 		'attributes'      => array(
-			'numberOfPosts'  => array(
+			'numberOfPosts' => array(
 				'type'    => 'number',
 				'default' => 10
 			),
-			'postCategory' => array(
+			'postCategory'  => array(
 				'type' => 'number'
 			),
-			'order'          => array(
+			'order'         => array(
 				'type'    => 'string',
 				'default' => 'desc'
 			),
-			'orderBy'        => array(
+			'orderBy'       => array(
 				'type'    => 'string',
 				'default' => 'date'
 			),
-			'columns'        => array(
+			'columns'       => array(
 				'type'    => 'number',
 				'default' => 4
 			)
@@ -80,7 +85,7 @@ function tpgb_blocks_register() {
 
 add_action( 'init', 'tpgb_blocks_register' );
 
-function tpgb_blocks_category( $categories, $post ) {
+function tpgb_blocks_category( $categories ) {
 	return array_merge(
 		$categories,
 		array(
@@ -120,7 +125,7 @@ function tpgb_blocks_render_post_grid_block( $attributes ) {
 			if ( get_the_post_thumbnail( get_the_ID(), 'large' ) !== '' ) {
 				$posts .= get_the_post_thumbnail( get_the_ID(), 'large' );
 			} else {
-				$posts .= '<img src="https://via.placeholder.com/350" class=" wp-post-image">';
+				$posts .= '<img src="https://via.placeholder.com/350" class=" wp-post-image" alt="Post Image">';
 			}
 			$posts .= '</a>';
 			$posts .= '</div>';
@@ -129,7 +134,7 @@ function tpgb_blocks_render_post_grid_block( $attributes ) {
 			$posts .= '<a href="' . esc_url( get_the_permalink() ) . '">' . get_the_title() . '</a>';
 			$posts .= '</h2>';
 			$posts .= '<div class="tpgb-post-item-desc">' . tpgb_extract_html( get_the_excerpt(), 150 ) . '</div>';
-			$posts .= '<div class="tpgb-post-item-readmore"><a href='.esc_url( get_the_permalink() ).' target="_blank">'.__( 'Read More', 'tpgb' ).'</a></div>';
+			$posts .= '<div class="tpgb-post-item-readmore"><a href=' . esc_url( get_the_permalink() ) . ' target="_blank">' . __( 'Read More', 'tpgb' ) . '</a></div>';
 			$posts .= '</div>';
 			$posts .= '</div>';
 			$posts .= '</div>';

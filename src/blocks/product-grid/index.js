@@ -49,6 +49,7 @@ registerBlockType('tpgb/product-grid', {
             orderBy,
             numberOfProducts,
             columns,
+            viewType,
         } = attributes;
 
         const listCats = categories.join(',');
@@ -64,7 +65,8 @@ registerBlockType('tpgb/product-grid', {
 
         const blockClassName = [
             'tpgb-woo-products',
-            'tpgb-woo-product-grid'
+            'tpgb-woo-product-grid',
+            viewType === 'slider' && 'slider-view',
         ].filter( Boolean ).join( ' ' );
 
         return (

@@ -10,7 +10,7 @@ module.exports = (env, argv) => {
         return argv.mode === 'development';
     }
 
-    const config = {
+    return {
         entry: {
             editor: './src/editor.js',
             script: './src/script.js'
@@ -88,6 +88,7 @@ module.exports = (env, argv) => {
                             loader: 'file-loader',
                             options: {
                                 name: '[name].[ext]',
+                                outputPath: 'fonts/'
                             }
                         }
                     ]
@@ -120,5 +121,4 @@ module.exports = (env, argv) => {
             "@wordpress/url": ["wp", "url"],
         }
     };
-    return config;
 }
